@@ -7,6 +7,7 @@ use App\Models\PostModel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -23,8 +24,7 @@ class PostController extends Controller
     }
 
     // method untuk insert data ke table post
-    public function store(Request $request)
-    {
+    public function store(Request $request){
 
         // dd($request->hasFile('images'));
         $post = PostModel::Create([
@@ -51,10 +51,11 @@ class PostController extends Controller
             ]);
         }
 
-     
        return redirect('post_list')->with('success', 'A post created successfully.');
      
     }
+
+
 
     public static function slugify($text, string $divider = '-'){
           // replace non letter or digits by divider

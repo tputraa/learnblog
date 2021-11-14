@@ -56,24 +56,6 @@
   <script src="{{asset('assets/js/custom.js')}}"></script>
 
   <!-- Page Specific JS File -->
-@stack('page-scripts')
-<script src="{{asset('vendor/ckeditor/ckeditor.js')}}"></script>
-<script>
-        $(document).ready(function () {
-           var editor1 = CKEDITOR.replace( 'editor1', {
-                language: 'en',
-                extraPlugins: 'notification'
-            });
-
-            // CKEDITOR.editorConfig = function( config ) {
-            //   config.removePlugins = 'easyimage, cloudservices';
-            // };
-
-            editor1.on( 'required', function( evt ) {
-                editor1.showNotification( 'This field is required.', 'warning' );
-                evt.cancel();
-            } );
-        });
-</script>
+  @stack('page-scripts')
 </body>
 </html>
