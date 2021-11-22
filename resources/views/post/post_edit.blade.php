@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('title','Post Add')
+@section('title','Post Edit')
 @section('content')
 <style type="text/css">
   .form-group label{
@@ -16,19 +16,22 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Title</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" name="title" id="title" placeholder="Title" value="{{ old('title') }}">
+          <input type="text" class="form-control" name="title" id="title" placeholder="Title" value="{{old('title',$post->title)}}">
         </div>
       </div>
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Cover Image</label>
         <div class="col-sm-9">
           <input type="file" class="form-control" name="images" placeholder="Images" accept="image/jpeg, image/png">
+          <br>
+          <img src="{{ asset('/post_images/'.$images->img_name) }}" class="img-thumbnail" alt="Banner" width="50%">
         </div>
+        
       </div>
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Content</label>
         <div class="col-sm-9">
-          <textarea id="editor1" name="content">{{ old('content') }}</textarea>
+          <textarea id="editor1" name="content">{{old('content',$post->content)}}</textarea>
         </div>
       </div>
       <div class="form-group row">
@@ -36,7 +39,7 @@
         <div class="col-sm-2">
           <select class="form-control" name="category">
             @foreach ($category as $row)
-              <option value="{{ $row->id }}">{{ $row->cat_name }}</option>
+              <option value="{{ $row->id }}" {{ ( $row->id == $post->cat_id) ? 'selected' : '' }}>{{ $row->cat_name }}</option>
            @endforeach  
           </select>
         </div>
@@ -45,9 +48,10 @@
         <div class="col-sm-3">Status</div>
         <div class="col-sm-2">
           <select class="form-control" name="status">
-            <option value="0">Draft</option>
-            <option value="1">Publish</option>
-            <option value="2">Archive</option>
+
+            <option value="0" {{ ( $post->status == '0') ? 'selected' : '' }}>Draft</option>
+            <option value="1" {{ ( $post->status == '1') ? 'selected' : '' }}>Publish</option>
+            <option value="2" {{ ( $post->status == '2') ? 'selected' : '' }}>Archive</option>
           </select>
         </div>
       </div>
@@ -58,6 +62,7 @@
   </div>
 </div>
 @endsection
+
 
 @push('page-scripts')
 <link rel="stylesheet" href="{{asset('vendor/sweetalert2/sweetalert2.min.css')}}">

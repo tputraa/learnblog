@@ -26,8 +26,8 @@ Route::group(['middleware' => 'auth'], function(){
     //crud post
     Route::get('/post_add','PostController@post_add');
     Route::post('post','PostController@store');
-    Route::get('/post/store/{id}', 'PostController@edit')->name('post.edit');
-    Route::post('/post/update/{id}', 'PostController@update')->name('post.update');
+    Route::get('/post_edit/{id}', 'PostController@edit');
+    Route::post('/post/update/{id}', 'PostController@update');
 
 
     Route::get('/logout','Auth\AuthController@logout');

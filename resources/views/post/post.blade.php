@@ -26,7 +26,11 @@
                   <tr>
                     <td>{{ $no+1 }}</td>
                     <td>{{ $data->title}}</td>
-                    <td><a href="" id="tes">a</a></td>
+                    <td>
+                      <div>
+                          <a href="{{ url('post_edit',$data->id) }}" class="btn btn-sm btn-info">Edit</a>  
+                      </div>
+                    </td>
                   </tr>
                   @endforeach
                 </tfoot>
@@ -38,26 +42,3 @@
     </div>
 </div>
 @endsection
-
-@push('page-scripts')
-<link rel="stylesheet" href="{{asset('vendor/sweetalert2/sweetalert2.min.css')}}">
-<script src="{{asset('vendor/ckeditor/ckeditor.js')}}"></script>
-<script src="{{asset('vendor/sweetalert2/sweetalert2.all.min.js')}}"></script>
-<script>
-        $(document).ready(function () {
-           var editor1 = CKEDITOR.replace( 'editor1', {
-                language: 'en',
-                extraPlugins: 'notification'
-            });
-
-            // CKEDITOR.editorConfig = function( config ) {
-            //   config.removePlugins = 'easyimage, cloudservices';
-            // };
-
-            editor1.on( 'required', function( evt ) {
-                editor1.showNotification( 'This field is required.', 'warning' );
-                evt.cancel();
-            } );
-        });
-</script>
-@endpush

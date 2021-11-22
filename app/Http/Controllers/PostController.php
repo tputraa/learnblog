@@ -55,7 +55,29 @@ class PostController extends Controller
      
     }
 
+    public function edit($id){
+      $post['post']     = PostModel::find($id);
+      $post['category'] = DB::table('category')->get();
+      $post['images']   = DB::table('post_images')->where('post_id',$id)->first();
+      // dd($post);
+      return view('post.post_edit',$post);
+   }
 
+   public function displayImage($filename){
+
+        $path = storage_public('images/' . $filename);
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+      
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+        return $response;
+
+    }
 
     public static function slugify($text, string $divider = '-'){
           // replace non letter or digits by divider
