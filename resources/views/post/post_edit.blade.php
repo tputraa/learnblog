@@ -11,12 +11,13 @@
     <h4>Add Post</h4>
   </div>
   <div class="card-body">
-    <form action="/post" method="POST" enctype="multipart/form-data">
-      {{ csrf_field() }}
+    <form action="{{ url('post/update/'.$post->id) }}" method="POST" enctype="multipart/form-data">
+      @method('patch')
+      @csrf
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Title</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" name="title" id="title" placeholder="Title" value="{{old('title',$post->title)}}">
+          <input type="text" class="form-control" name="title" id="title" placeholder="Title" value="{{old('title',$post->title)}}" required>
         </div>
       </div>
       <div class="form-group row">
@@ -24,14 +25,20 @@
         <div class="col-sm-9">
           <input type="file" class="form-control" name="images" placeholder="Images" accept="image/jpeg, image/png">
           <br>
-          <img src="{{ asset('/post_images/'.$images->img_name) }}" class="img-thumbnail" alt="Banner" width="50%">
+          @php if(isset($images->img_name)){
+              $img = asset('/post_images/'.$images->img_name);
+            } else{
+              $img = asset('assets/img/example-image-50.jpg');
+            }
+          @endphp
+          <img src="{{ $img }}" class="img-thumbnail" alt="Banner" style="width: 30% !important;height: auto;">
         </div>
         
       </div>
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Content</label>
         <div class="col-sm-9">
-          <textarea id="editor1" name="content">{{old('content',$post->content)}}</textarea>
+          <textarea id="editor1" name="content" required>{{old('content',$post->content)}}</textarea>
         </div>
       </div>
       <div class="form-group row">

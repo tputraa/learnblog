@@ -61,9 +61,50 @@ class PostController extends Controller
       $post['images']   = DB::table('post_images')->where('post_id',$id)->first();
       // dd($post);
       return view('post.post_edit',$post);
-   }
+    }
 
-   public function displayImage($filename){
+    public function update(Request $request,$id){
+
+        // $data = $request->except('_method','_token','submit');
+
+        $subject = PostModel::where('id',$id)->update([
+                'title' => $request->title,
+                'content' => $request->content,
+                'cat_id' => $request->category,
+                'status' => $request->status,
+                'title_slug' => $this->slugify($request->title),
+                'created_by' => $request->user()->id
+        ]);
+        // dd($post);
+        if($request->hasFile('images')) {
+
+            $file = $request->file('images');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('/post_images');
+            $file->move($destinationPath, $fileName);
+            // $post->image = $fileName;
+
+            DB::table('post_images')->where('post_id',$id)->update([
+                'img_name' => $fileName,
+                'img_type' => $file->getClientOriginalExtension()
+            ]);
+        }
+
+      if($subject){
+         return redirect('post_list')->with('success', 'A post edited successfully.');
+      }else{
+        return redirect('post_list')->with('success', 'A post failed to edit.');
+      }
+
+    }
+
+    public function destroy($id){
+        PostModel::destroy($id);
+        return redirect('post_list')->with('success', 'A post deleted successfully.');
+    }
+
+    //not sure
+    public function displayImage($filename){
 
         $path = storage_public('images/' . $filename);
         if (!File::exists($path)) {
