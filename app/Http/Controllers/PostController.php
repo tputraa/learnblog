@@ -14,7 +14,7 @@ class PostController extends Controller
     //
     public function index(){
         
-        $listpost = DB::table('post_list')->where('status',1)->orderBy('id', 'desc')->simplePaginate(5);
+        $listpost = DB::table('post_list')->whereIn('status',[0,1])->orderBy('id', 'desc')->simplePaginate(5);
         return view('post.post',compact('listpost'));
     }
 

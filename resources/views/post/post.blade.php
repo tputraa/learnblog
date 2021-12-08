@@ -13,11 +13,12 @@
       		</div>
           	<div class="table-responsive">
               @include('layout.flash-message')
-	            <table class="table table-striped">
-                <thead>
+	            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
 	            	<tr>
 	            		<th>No</th>
-	            		<th>Judul</th>
+	            		<th>Title</th>
+                  <th>Status</th>
                   <th>#</th>
 	            	</tr>
                 </thead>
@@ -26,6 +27,13 @@
                   <tr>
                     <td>{{ $no+1 }}</td>
                     <td>{{ $data->title}}</td>
+                    <td>
+                      @if($data->status == 0) 
+                        <button class="btn btn-sm btn-warning">Draft</button> 
+                      @else 
+                        <button class="btn btn-sm btn-success">Publish</button> 
+                      @endif
+                    </td>
                     <td>
                       <div class="d-inline">
                           <a href="{{ url('post_edit',$data->id) }}" class="btn btn-sm btn-info">Edit</a>  
