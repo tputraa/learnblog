@@ -60,9 +60,9 @@
 @endsection
 
 @push('page-scripts')
-<link rel="stylesheet" href="{{asset('vendor/sweetalert2/sweetalert2.min.css')}}">
+
 <script src="{{asset('vendor/ckeditor/ckeditor.js')}}"></script>
-<script src="{{asset('vendor/sweetalert2/sweetalert2.all.min.js')}}"></script>
+
 <script>
         $(document).ready(function () {
            var editor1 = CKEDITOR.replace( 'editor1', {

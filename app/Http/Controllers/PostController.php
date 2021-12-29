@@ -99,7 +99,8 @@ class PostController extends Controller
     }
 
     public function destroy($id){
-        PostModel::destroy($id);
+        $d = PostModel::destroy($id);
+        // dd($d);
         return redirect('post_list')->with('success', 'A post deleted successfully.');
     }
 

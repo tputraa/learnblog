@@ -36,12 +36,14 @@
                     </td>
                     <td>
                       <div class="d-inline">
-                          <a href="{{ url('post_edit',$data->id) }}" class="btn btn-sm btn-info">Edit</a>  
-                          <form action="{{ url('post/'.$data->id) }}" method="post" class="d-inline">
-                            @method('delete')
-                            @csrf
-                              <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-                          </form>
+                          <a href="{{ url('post_edit',$data->id) }}" class="badge badge-info">Edit</a>  
+                          <a class="badge badge-danger swal-confirm" data-id="{{ $data->id }}" id="del" type="submit" style="color: white;">
+                            <form action="{{ route('post.destroy',$data->id) }}" data-id="{{ $data->id }}" method="post" id="delete{{ $data->id }}" class="d-inline">
+                              @csrf
+                              @method('delete')
+                            </form>
+                            Delete
+                          </a>
                       </div>
                     </td>
                   </tr>
@@ -55,3 +57,35 @@
     </div>
 </div>
 @endsection
+
+@push('page-scripts')
+<link rel="stylesheet" href="{{asset('vendor/sweetalert2/sweetalert2.min.css')}}">
+<script src="{{asset('vendor/sweetalert2/sweetalert2.all.min.js')}}"></script>
+<script type="text/javascript">
+  $('#del').click(function(e){
+      id = e.target.dataset.id;
+
+      Swal.fire({
+        title: 'Are you sure to delete? '+id,
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result) {
+          $(`#delete${id}`).submit();
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }else{
+          Swal('Tidak Jadi');
+        }
+      });
+  });
+</script>
+
+@endpush

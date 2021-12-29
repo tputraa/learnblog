@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('post','PostController@store');
     Route::get('/post_edit/{id}', 'PostController@edit');
     Route::patch('/post/update/{id}', 'PostController@update');
-    Route::delete('/post/{id}','PostController@destroy');
+    Route::delete('/post/del/{id}','PostController@destroy')->name('post.destroy');
     // Route::patch('/post/{id}','PostController@update');
 
     Route::get('/logout','Auth\AuthController@logout');
